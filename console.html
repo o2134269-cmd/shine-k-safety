@@ -59,7 +59,10 @@
         <div class="kpi-row" id="kpiRow"></div>
         <div class="cs-grid">
           <div class="cs-card cc-zones"><div class="cs-card-head"><h3 data-i18n="c.cc.zones">Work-zone status</h3></div><div id="ccZones" class="zone-grid"></div></div>
-          <div class="cs-card cc-cctv"><div class="cs-card-head"><h3 data-i18n="c.cc.cctv">CCTV AI monitoring</h3><span class="tag-acc" id="ccCctvAcc">97.8% mAP</span></div><div id="ccCctv" class="cctv-grid"></div></div>
+          <div class="cs-card cc-cctv"><div class="cs-card-head"><h3 data-i18n="c.cc.cctv">CCTV AI monitoring</h3><span class="tag-acc" id="ccCctvAcc">97.8% mAP</span></div>
+            <div class="cctv-bar"><span class="cctv-sub" data-i18n="c.cc.cctvSub">YOLOv11 · real-time object &amp; pose detection</span>
+              <span class="cctv-legend"><i><b class="lg-ok"></b><span data-i18n="c.cc.cctvLegOk">normal</span></i><i><b class="lg-wn"></b><span data-i18n="c.cc.cctvLegWarn">watch</span></i></span></div>
+            <div id="ccCctv" class="cctv-grid"></div></div>
           <div class="cs-card cc-feed"><div class="cs-card-head"><h3 data-i18n="c.cc.feed">Live alert feed</h3><span class="live-dot"></span></div><div id="ccFeed" class="alert-feed"></div></div>
           <div class="cs-card cc-chain"><div class="cs-card-head"><h3 data-i18n="c.cc.chain">Emergency response chain</h3></div><div id="ccChain" class="chain-row"></div></div>
           <div class="cs-card cc-health"><div class="cs-card-head"><h3 data-i18n="c.cc.health">Workforce health now</h3></div><div id="ccHealth" class="cc-health-grid"></div></div>
@@ -125,6 +128,7 @@
               <div class="motion-status" id="motionStatus"></div>
               <div id="motionReba" class="reba-grid"></div>
               <p class="motion-how" data-i18n="c.motion.how">How it works: BlazePose estimates 33 body keypoints in-browser, computes a REBA ergonomic score, and flags sudden vertical drops / inactivity as falls — triggering the emergency chain.</p>
+              <div class="motion-chain" id="motionChain"></div>
             </div>
           </div>
         </div>

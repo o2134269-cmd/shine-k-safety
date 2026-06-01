@@ -495,3 +495,29 @@ section[id],#top{scroll-margin-top:84px}
   .engine-inputs{flex-direction:column}
   .fc-extras{flex-direction:column}
 }
+
+/* causal chain — animated traveling pulse */
+.chain-flow .chain-step{transition:transform .3s ease,box-shadow .3s ease;animation:chainStep 4.2s ease-in-out infinite}
+.chain-flow .chain-step .chain-ic{transition:transform .3s ease;display:inline-block}
+.chain-flow .chain-step:nth-of-type(1){animation-delay:0s}
+.chain-flow .chain-step:nth-of-type(2){animation-delay:.5s}
+.chain-flow .chain-step:nth-of-type(3){animation-delay:1s}
+.chain-flow .chain-step:nth-of-type(4){animation-delay:1.5s}
+.chain-flow .chain-step:nth-of-type(5){animation-delay:2s}
+@keyframes chainStep{0%,20%,100%{transform:translateY(0);box-shadow:none}7%,13%{transform:translateY(-7px);box-shadow:0 12px 26px rgba(255,198,41,.42),0 0 0 2px var(--yellow) inset}}
+.chain-flow .chain-arrow{animation:chainArrow 4.2s ease-in-out infinite}
+.chain-flow .chain-arrow:nth-of-type(1){animation-delay:.28s}
+.chain-flow .chain-arrow:nth-of-type(2){animation-delay:.78s}
+.chain-flow .chain-arrow:nth-of-type(3){animation-delay:1.28s}
+.chain-flow .chain-arrow:nth-of-type(4){animation-delay:1.78s}
+@keyframes chainArrow{0%,22%,100%{opacity:.45;transform:none}9%{opacity:1;transform:translateX(4px) scale(1.25)}}
+
+/* cluster list — hover reveals extra info */
+.cluster-item{display:block}
+.ci-top{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.cluster-item{transition:border-color .2s,box-shadow .2s;cursor:pointer}
+.cluster-item:hover,.cluster-item:focus-within{border-color:var(--navy);box-shadow:var(--shadow);outline:none}
+.cluster-extra{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:0;opacity:0;overflow:hidden;margin-top:0;transition:max-height .32s ease,opacity .32s ease,margin-top .32s ease}
+.cluster-item:hover .cluster-extra,.cluster-item:focus-within .cluster-extra{max-height:72px;opacity:1;margin-top:11px}
+.cx{background:#fff;border:1px solid var(--line-2);border-radius:9px;padding:8px 6px;text-align:center;font-size:.7rem;color:var(--muted)}
+.cx b{display:block;font-size:1rem;color:var(--navy);margin-bottom:1px}

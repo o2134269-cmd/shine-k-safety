@@ -622,3 +622,43 @@ ko:{
 };
 for(var l in C){ if(window.I18N[l]){ for(var k in C[l]) window.I18N[l][k]=C[l][k]; } }
 })();
+
+/* =================== Dynamic upgrades (merged) =================== */
+(function(){
+var C={
+en:{
+  "lx.uptime":"Uptime","lx.alerts":"Sync alerts","lx.prevented":"Prevented today",
+  clustersExtra:[{u:"96.4%",a:"2",p:"18"},{u:"92.1%",a:"5",p:"27"},{u:"97.8%",a:"1",p:"9"}],
+  "c.cc.cctvSub":"YOLOv11 · real-time object & pose detection","c.cc.cctvLegOk":"normal","c.cc.cctvLegWarn":"watch","c.cc.cctvLegZone":"detection box",
+  cCctvDet:[{lab:"3 workers · PPE ✓",tone:"ok"},{lab:"pinch-zone watch",tone:"warn"},{lab:"leak watch · clear",tone:"ok"},{lab:"posture (REBA)",tone:"ok"},{lab:"forklift · speed OK",tone:"ok"},{lab:"heavy-lift watch",tone:"warn"},{lab:"vehicle entry",tone:"ok"},{lab:"unmanned · clear",tone:"ok"}],
+  "c.twin.evTitle":"Active event","c.twin.logicTitle":"Processing logic","c.twin.evNone":"Normal operation · no event",
+  "c.twin.evDanger":"Ultrasonic friction spiking","c.twin.evWatch":"Vibration deviation rising","c.twin.evSafe":"Within baseline",
+  "c.twin.l1":"SENSE · {m} vibration & ultrasound captured","c.twin.l2":"JUDGE · M-Index {r} → sync-risk scored","c.twin.l3":"ACT · RPM decelerated / maintenance scheduled","c.twin.l4":"CONNECT · manager alerted · logged to ledger",
+  "c.motion.chainTitle":"Emergency response chain · processing logic",
+  cChainDesc:["BlazePose confirms vertical drop + inactivity","Zone speaker & beacon activated","Push to manager's phone + location sent","e-Gen API files an automatic 119 call","ER pre-briefed · golden time secured"]
+},
+zh:{
+  "lx.uptime":"运行率","lx.alerts":"同步告警","lx.prevented":"今日已预防",
+  clustersExtra:[{u:"96.4%",a:"2",p:"18"},{u:"92.1%",a:"5",p:"27"},{u:"97.8%",a:"1",p:"9"}],
+  "c.cc.cctvSub":"YOLOv11 · 实时目标与姿态检测","c.cc.cctvLegOk":"正常","c.cc.cctvLegWarn":"注意","c.cc.cctvLegZone":"检测框",
+  cCctvDet:[{lab:"3 名工人 · PPE ✓",tone:"ok"},{lab:"夹点区域监视",tone:"warn"},{lab:"泄漏监视 · 正常",tone:"ok"},{lab:"姿态(REBA)",tone:"ok"},{lab:"叉车 · 速度正常",tone:"ok"},{lab:"重物搬运监视",tone:"warn"},{lab:"车辆出入识别",tone:"ok"},{lab:"无人 · 无异常",tone:"ok"}],
+  "c.twin.evTitle":"当前事件","c.twin.logicTitle":"处理逻辑","c.twin.evNone":"正常运行 · 无事件",
+  "c.twin.evDanger":"超声摩擦骤升","c.twin.evWatch":"振动偏差上升","c.twin.evSafe":"处于基线内",
+  "c.twin.l1":"SENSE · 采集 {m} 振动与超声","c.twin.l2":"JUDGE · M 指数 {r} → 评估同步风险","c.twin.l3":"ACT · 减速 RPM / 排程维护","c.twin.l4":"CONNECT · 通知管理者 · 写入账本",
+  "c.motion.chainTitle":"紧急响应链 · 处理逻辑",
+  cChainDesc:["BlazePose 确认垂直下坠 + 静止","区域扬声器与警示灯启动","推送至管理者手机 + 发送位置","e-Gen API 自动拨打 119","急救室预先简报 · 抢占黄金时间"]
+},
+ko:{
+  "lx.uptime":"가동률","lx.alerts":"동기화 알림","lx.prevented":"오늘 예방",
+  clustersExtra:[{u:"96.4%",a:"2",p:"18"},{u:"92.1%",a:"5",p:"27"},{u:"97.8%",a:"1",p:"9"}],
+  "c.cc.cctvSub":"YOLOv11 · 객체·자세 실시간 감지","c.cc.cctvLegOk":"정상","c.cc.cctvLegWarn":"주의","c.cc.cctvLegZone":"감지 영역",
+  cCctvDet:[{lab:"근로자 3 · PPE ✓",tone:"ok"},{lab:"끼임구역 감시",tone:"warn"},{lab:"누출 감시 · 정상",tone:"ok"},{lab:"자세(REBA) 분석",tone:"ok"},{lab:"지게차 · 속도 정상",tone:"ok"},{lab:"중량물 취급 감시",tone:"warn"},{lab:"차량 출입 인식",tone:"ok"},{lab:"무인 · 이상 없음",tone:"ok"}],
+  "c.twin.evTitle":"현재 이벤트","c.twin.logicTitle":"처리 로직","c.twin.evNone":"정상 가동 · 이벤트 없음",
+  "c.twin.evDanger":"초음파 마찰음 급상승","c.twin.evWatch":"진동 편차 증가","c.twin.evSafe":"기준선 내",
+  "c.twin.l1":"SENSE · {m} 진동·초음파 신호 수집","c.twin.l2":"JUDGE · M-Index {r} → 동기화 위험 산출","c.twin.l3":"ACT · RPM 감속 / 정비 스케줄링","c.twin.l4":"CONNECT · 관리자 알림 · 원장 기록",
+  "c.motion.chainTitle":"긴급 대응 체인 · 처리 로직",
+  cChainDesc:["BlazePose가 수직 낙하 + 무동작 확정","구역 스피커·경광등 작동","담당자 모바일 푸시 + 위치 전송","e-Gen API로 119 자동 신고","응급실 사전 정보 공유 · 골든타임 확보"]
+}
+};
+for(var l in C){ if(window.I18N[l]){ for(var k in C[l]) window.I18N[l][k]=C[l][k]; } }
+})();

@@ -53,11 +53,12 @@ function initControl(){
   // KPI
   el("kpiRow").innerHTML=d.cKpi.map(function(k){return '<div class="kpi"><div class="kpi-v">'+esc(k.v)+'</div><div class="kpi-k">'+esc(k.k)+'</div><div class="kpi-d">'+esc(k.d)+'</div></div>';}).join('');
   // CCTV (static animated)
-  var letters=['A','B','C','D','E','F','G','H'];
   el("ccCctv").innerHTML=d.cCctv.map(function(n,i){
-    var bx=8+(i*13)%40, by=18+(i*17)%40, bw=24+(i%3)*8, bh=22+(i%2)*10;
+    var det=(d.cCctvDet&&d.cCctvDet[i])||{lab:'',tone:'ok'};
+    var bx=12+(i*11)%30, by=34+(i*17)%30, bw=32+(i%3)*7, bh=26+(i%2)*10;
     return '<div class="cctv"><span class="rec"></span><b>'+esc(n)+'</b><span class="scan"></span>'
-      +'<span class="box" style="left:'+bx+'%;top:'+by+'%;width:'+bw+'%;height:'+bh+'%"></span></div>';}).join('');
+      +'<span class="cbox '+(det.tone==='warn'?'warn':'')+'" style="left:'+bx+'%;top:'+by+'%;width:'+bw+'%;height:'+bh+'%"><span class="cbox-lab">'+esc(det.lab)+'</span></span>'
+      +'<span class="cai">AI</span></div>';}).join('');
   // chain
   el("ccChain").innerHTML=d.cChain.map(function(c,i){
     return (i?'<span class="chain-arrow">→</span>':'')+'<div class="chain-node"><div class="cn-t">'+esc(c.t)+'</div><div class="cn-s">'+esc(c.s)+'</div></div>';}).join('');
@@ -104,7 +105,7 @@ var theta=0.6, autoOn=true, twinRisk=[20,28,66,18,40,24], twinBound=false;
 var TWM=[{x:-150,y:-70,w:70,d:46,h:55},{x:-40,y:-92,w:64,d:44,h:48},{x:80,y:-58,w:60,d:60,h:66},
          {x:-150,y:62,w:96,d:32,h:28},{x:30,y:70,w:56,d:50,h:50},{x:142,y:48,w:50,d:46,h:60}];
 var CX=350,CY=232;
-function proj(x,y,z){var c=Math.cos(theta),s=Math.sin(theta);var rx=x*c-y*s,ry=x*s+y*c;return [CX+rx*0.92,CY+ry*0.46-z*0.82];}
+function proj(x,y,z){var c=Math.cos(theta),s=Math.sin(theta);var rx=x*c-y*s,ry=x*s+y*c;return [CX+rx*0.74,CY+ry*0.37-z*0.66];}
 function band(r){return r>=72?{t:"#ef8079",s:"#cf4a3f",lab:t("dash.danger")}:r>=46?{t:"#f4cf6a",s:"#d79a16",lab:t("dash.watch")}:{t:"#69cfa0",s:"#2e9d6e",lab:t("dash.safe")};}
 function poly(pts){return pts.map(function(p){return p[0].toFixed(1)+","+p[1].toFixed(1);}).join(" ");}
 function buildTwin(){
@@ -132,6 +133,10 @@ function buildTwin(){
     s+='<polygon points="'+poly(top)+'" fill="'+col.t+'" stroke="#ffffff" stroke-width="1.4"/>';
     var ctr=proj(m.x,m.y,h);
     s+='<text x="'+ctr[0].toFixed(1)+'" y="'+ctr[1].toFixed(1)+'" text-anchor="middle" font-size="11" font-weight="800" fill="#16213a">'+esc(dict().cTwinMachines[o.i].n)+'</text>';
+    var rr=twinRisk[o.i];
+    if(rr>=46){var mk=proj(m.x,m.y,h+24);
+      s+='<circle class="tev" cx="'+mk[0].toFixed(1)+'" cy="'+mk[1].toFixed(1)+'" r="9" fill="'+col.s+'" stroke="#fff" stroke-width="2"/>'
+        +'<text x="'+mk[0].toFixed(1)+'" y="'+(mk[1]+4).toFixed(1)+'" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">!</text>';}
     s+='</g>';
   });
   s+='</svg>';
@@ -140,8 +145,13 @@ function buildTwin(){
 function setTwinInfo(i){
   var info=el("twinInfo");
   if(i==null){info.innerHTML='<span style="color:var(--muted)">'+t("c.twin.click")+'</span>';return;}
-  var col=band(twinRisk[i]),soft=col.lab===t("dash.danger")?"var(--danger-soft)":col.lab===t("dash.watch")?"var(--watch-soft)":"var(--safe-soft)",fg=col.s;
-  info.innerHTML='<b>'+esc(dict().cTwinMachines[i].n)+'</b><span class="ti-pill" style="background:'+soft+';color:'+fg+'">'+col.lab+' · M-Index '+Math.round(twinRisk[i])+'</span>';
+  var r=Math.round(twinRisk[i]),col=band(twinRisk[i]),mname=dict().cTwinMachines[i].n;
+  var soft=col.lab===t("dash.danger")?"var(--danger-soft)":col.lab===t("dash.watch")?"var(--watch-soft)":"var(--safe-soft)";
+  var ev=r>=72?t("c.twin.evDanger"):r>=46?t("c.twin.evWatch"):t("c.twin.evNone");
+  function L(k){return t(k).replace("{m}",mname).replace("{r}",r);}
+  info.innerHTML='<div class="ti-head"><b>'+esc(mname)+'</b><span class="ti-pill" style="background:'+soft+';color:'+col.s+'">'+col.lab+' · M-Index '+r+'</span></div>'
+    +'<div class="ti-ev"><b>'+esc(t("c.twin.evTitle"))+':</b> '+esc(ev)+'</div>'
+    +'<div class="ti-logic"><b>'+esc(t("c.twin.logicTitle"))+'</b><ol><li>'+esc(L("c.twin.l1"))+'</li><li>'+esc(L("c.twin.l2"))+'</li><li>'+esc(L("c.twin.l3"))+'</li><li>'+esc(L("c.twin.l4"))+'</li></ol></div>';
 }
 function initTwin(){
   buildTwin(); setTwinInfo(null);
@@ -210,18 +220,32 @@ function runSim(id){
 /* ====================== MOTION / FALL (canvas) ====================== */
 var BONES=[[0,1],[1,2],[1,3],[2,4],[4,6],[3,5],[5,7],[1,8],[8,9],[8,10],[9,11],[11,13],[10,12],[12,14]];
 var STAND=[[180,58],[180,92],[152,100],[208,100],[142,140],[218,140],[136,180],[224,180],[180,182],[166,186],[194,186],[160,238],[200,238],[158,288],[202,288]];
-var motionMode="idle",fallP=0,motionT=0,motionBound=false;
+var motionMode="idle",fallP=0,motionT=0,motionBound=false,fallChainRun=false;
 function rot(pt,cx,cy,a){var dx=pt[0]-cx,dy=pt[1]-cy,c=Math.cos(a),s=Math.sin(a);return [cx+dx*c-dy*s, cy+dx*s+dy*c];}
 function initMotion(){
-  motionMode="idle";fallP=0;motionT=0;
+  motionMode="idle";fallP=0;motionT=0;fallChainRun=false;
+  var mc=el("motionChain");if(mc)mc.innerHTML='';
   if(!motionBound){
     el("motionPlay").addEventListener("click",function(){motionMode=(motionMode==="paused")?"idle":(motionMode==="idle"?"paused":"idle");this.textContent=(motionMode==="paused")?"▶ "+t("c.motion.play").replace(/[▶\s]/g,''):t("c.motion.play");if(motionMode!=="paused"&&!motionRAF)loopMotion();});
-    el("motionFall").addEventListener("click",function(){motionMode="falling";fallP=0;});
+    el("motionFall").addEventListener("click",function(){motionMode="falling";fallP=0;fallChainRun=false;var m=el("motionChain");if(m)m.innerHTML='';renderReba(false);setStatus("ok");if(!motionRAF)loopMotion();});
     motionBound=true;
   }
   el("motionPlay").textContent=t("c.motion.play");
   renderReba(false); setStatus("ok");
   loopMotion();
+}
+function runFallChain(){
+  var chain=dict().cChain, desc=dict().cChainDesc||[], host=el("motionChain"); if(!host)return;
+  host.innerHTML='<div class="mc-title">'+esc(t("c.motion.chainTitle"))+'</div>';
+  chain.forEach(function(c,i){
+    addT(function(){
+      var div=document.createElement('div');div.className='mc-step';
+      div.innerHTML='<span class="mc-n">'+(i+1)+'</span><div class="mc-mid"><div class="mc-t">'+esc(c.t)+'</div><div class="mc-d">'+esc(desc[i]||'')+'</div></div><span class="mc-s">'+esc(c.s)+'</span>';
+      host.appendChild(div);
+      var steps=host.querySelectorAll('.mc-step'); if(steps[i-1])steps[i-1].classList.add('done');
+      if(i===chain.length-1)addT(function(){div.classList.add('done');},800);
+    }, 400+i*950);
+  });
 }
 function setStatus(kind){
   var s=el("motionStatus");if(!s)return;
@@ -243,7 +267,7 @@ function loopMotion(){
     var pts=STAND.map(function(p){return [p[0],p[1]];});
     if(motionMode==="falling"){fallP=Math.min(1,fallP+0.018);}
     var ease=motionMode==="falling"||motionMode==="fallen"?fallP:0;
-    if(ease>=1&&motionMode==="falling"){motionMode="fallen";setStatus("fall");renderReba(true);}
+    if(ease>=1&&motionMode==="falling"){motionMode="fallen";setStatus("fall");renderReba(true);if(!fallChainRun){fallChainRun=true;runFallChain();}}
     if(motionMode==="idle"){var sway=Math.sin(motionT)*3;pts=pts.map(function(p,i){return [p[0]+(i<8?sway*0.4:0), p[1]+Math.sin(motionT+i)*0.8];});}
     if(ease>0){var ang=ease*1.5;pts=pts.map(function(p){var r=rot(p,180,182,ang);return [r[0], r[1]+ease*70];});}
     // bbox

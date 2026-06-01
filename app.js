@@ -56,7 +56,7 @@ function renderGauge(host,idx){
 function renderDual(host){
   if(!host)return;
   var W=620,H=270,pad={l:38,r:16,t:18,b:34},n=18;
-  var ph=Date.now()/11000, M=[],Hh=[];
+  var ph=Date.now()/3200, M=[],Hh=[];
   for(var i=0;i<n;i++){
     var m=38+20*Math.sin(i/3.1+ph)+8*Math.sin(i/1.4+ph*1.6);
     m=Math.max(8,Math.min(96,m));M.push(m);
@@ -246,10 +246,12 @@ function renderMap(host){
 function renderClusterList(host){
   if(!host)return;
   var cl=dict().clusters,h='';
-  for(var i=0;i<cl.length;i++){var c=clusterData[i];
-    h+='<li class="cluster-item"><span class="cluster-pin" style="background:'+c.status+'"></span>'
+  var ex=dict().clustersExtra||[];
+  for(var i=0;i<cl.length;i++){var c=clusterData[i],e=ex[i]||{};
+    h+='<li class="cluster-item" tabindex="0"><div class="ci-top"><span class="cluster-pin" style="background:'+c.status+'"></span>'
       +'<div><div class="cluster-name">'+cl[i].n+'</div><div class="cluster-tag">'+cl[i].t+'</div></div>'
-      +'<div class="cluster-count">'+c.sites+'<small>'+t("app.sites")+' · '+(c.workers/1000).toFixed(1)+'k '+t("app.workers")+'</small></div></li>';}
+      +'<div class="cluster-count">'+c.sites+'<small>'+t("app.sites")+' · '+(c.workers/1000).toFixed(1)+'k '+t("app.workers")+'</small></div></div>'
+      +'<div class="cluster-extra"><span class="cx"><b>'+(e.u||'—')+'</b>'+t("lx.uptime")+'</span><span class="cx"><b>'+(e.a||'0')+'</b>'+t("lx.alerts")+'</span><span class="cx"><b>'+(e.p||'0')+'</b>'+t("lx.prevented")+'</span></div></li>';}
   host.innerHTML=h;
 }
 
@@ -340,7 +342,9 @@ function startLive(){
     renderVitals(document.getElementById("vitalsList"));
     renderMap(document.getElementById("clusterMap"));
   },3500);
-  setInterval(function(){renderDual(document.getElementById("dualChart"));},6000);
+  var dashV=true;
+  if("IntersectionObserver" in window){var dEl=document.getElementById("dashboard");if(dEl){var dio=new IntersectionObserver(function(es){dashV=es[0].isIntersecting;},{threshold:0.01});dio.observe(dEl);}}
+  setInterval(function(){if(dashV)renderDual(document.getElementById("dualChart"));},90);
   setInterval(function(){pushEventIdx();renderFeed(document.getElementById("alertFeed"));},5000);
   setInterval(function(){stepBoard();renderBoard(document.getElementById("fcBoard"));},6000);
   setInterval(function(){var i=1+Math.floor(Math.random()*(healthVals.length-1)),d=(Math.random()<0.5?-1:1);
