@@ -114,7 +114,8 @@
 .twin-stage{height:clamp(320px,46vh,460px);border-radius:14px;background:radial-gradient(120% 120% at 50% 0%,#f3f7ff,#e7eef9);border:1px solid var(--line);position:relative;cursor:grab;touch-action:none}
 .twin-stage:active{cursor:grabbing}
 .twin-stage{overflow:hidden}
-.twin-stage svg{width:100%;height:100%;display:block}
+.twin-scene{position:absolute;inset:0}
+.twin-stage svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .tev{animation:tev 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 @keyframes tev{0%,100%{opacity:.55}50%{opacity:1}}
 .twin-info{margin-top:12px;min-height:42px;display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--slate)}
