@@ -26,7 +26,13 @@
       <a href="#twin" data-view="twin"><span class="cs-ic">🏭</span><span data-i18n="c.nav.twin">3D Digital Twin</span></a>
       <a href="#agent" data-view="agent"><span class="cs-ic">🤖</span><span data-i18n="c.nav.agent">AI Agent Harness</span></a>
       <a href="#sim" data-view="sim"><span class="cs-ic">🎮</span><span data-i18n="c.nav.sim">Scenario Simulator</span></a>
-      <a href="#motion" data-view="motion"><span class="cs-ic">🧍</span><span data-i18n="c.nav.motion">Motion / Fall Detect</span></a>
+      <div class="cs-nav-group" id="motionGroup">
+        <a href="#motion" data-view="motion"><span class="cs-ic">🧍</span><span data-i18n="c.nav.motion">Motion / Fall Detect</span></a>
+        <div class="cs-subnav">
+          <a href="#motion" data-scn="fall" data-i18n="c.motion.subFall">Fall</a>
+          <a href="#motion" data-scn="pinch" data-i18n="c.motion.subPinch">Caught-in</a>
+        </div>
+      </div>
       <a href="#devices" data-view="devices"><span class="cs-ic">📡</span><span data-i18n="c.nav.devices">Connected Devices</span></a>
       <a href="#signup" data-view="signup"><span class="cs-ic">🏢</span><span data-i18n="c.nav.signup">Company Sign-up</span></a>
     </nav>
@@ -122,7 +128,8 @@
           <div class="motion-split">
             <div class="motion-stage"><canvas id="poseCanvas" width="360" height="320" aria-label="pose skeleton"></canvas>
               <div class="motion-ctrls"><button class="twin-btn" id="motionPlay" data-i18n="c.motion.play">▶ Play</button>
-                <button class="twin-btn" id="motionFall" data-i18n="c.motion.fall">Simulate fall</button></div>
+                <button class="twin-btn" id="motionFall" data-i18n="c.motion.fall">Simulate fall</button>
+                <button class="twin-btn" id="motionPinch" data-i18n="c.motion.pinch">Simulate caught-in</button></div>
             </div>
             <div class="motion-panel">
               <div class="motion-status" id="motionStatus"></div>

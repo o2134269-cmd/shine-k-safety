@@ -16,6 +16,13 @@
 .cs-nav a .cs-ic{font-size:1.05rem;width:22px;text-align:center}
 .cs-nav a:hover{background:var(--bg-2);color:var(--navy)}
 .cs-nav a.active{background:var(--navy);color:#fff}
+.cs-nav-group{display:flex;flex-direction:column}
+.cs-subnav{display:flex;flex-direction:column;max-height:0;overflow:hidden;transition:max-height .26s ease;margin:2px 0 2px 30px;border-left:2px solid var(--line)}
+.cs-nav-group:hover .cs-subnav,.cs-nav-group.open .cs-subnav{max-height:130px}
+.cs-subnav a{padding:8px 12px;font-size:.85rem;color:var(--slate);border-radius:8px;font-weight:600}
+.cs-subnav a::before{content:"›";margin-right:7px;color:var(--yellow-d);font-weight:800}
+.cs-subnav a:hover{color:var(--navy);background:var(--bg-2)}
+.cs-subnav a.scn-active{color:var(--navy);background:var(--bg-2)}
 .cs-side-foot{padding:14px 18px;border-top:1px solid var(--line-2)}
 .cs-facility{display:flex;align-items:center;gap:8px;font-size:.82rem;color:var(--slate);font-weight:600;margin-bottom:8px}
 .cs-home{font-size:.82rem;color:var(--muted)}
@@ -64,7 +71,10 @@
 .zcell .zn{font-size:.78rem;color:var(--muted)}
 .cctv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .cctv{position:relative;aspect-ratio:4/3;border-radius:10px;background:linear-gradient(135deg,#1b2a4a,#33476e);overflow:hidden;border:1px solid var(--line)}
-.cctv b{position:absolute;left:7px;top:6px;font-size:.66rem;color:#cfe0ff;font-weight:700}
+.cctv-scene{position:absolute;inset:0;width:100%;height:100%;display:block}
+.cctv-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,22,42,.15),rgba(12,22,42,.5));z-index:1}
+.cctv b{position:absolute;left:7px;top:6px;font-size:.66rem;color:#fff;font-weight:800;text-shadow:0 1px 3px rgba(0,0,0,.6);z-index:2}
+.cctv .scan,.cctv .rec,.cctv .cbox,.cctv .cai{z-index:2}
 .cctv .box{position:absolute;border:2px solid #62ff9a;border-radius:3px}
 .cctv .rec{position:absolute;right:6px;top:6px;width:7px;height:7px;border-radius:50%;background:#ff5a4d}
 .cctv .scan{position:absolute;left:0;right:0;height:2px;background:rgba(98,255,154,.6);animation:scan 3s linear infinite}
