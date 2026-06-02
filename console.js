@@ -99,25 +99,39 @@ function pushFeed(){var evs=dict().events;ccFeed.unshift({idx:Math.floor(Math.ra
 function renderFeed(){var evs=dict().events;el("ccFeed").innerHTML=ccFeed.map(function(f){var e=evs[f.idx]||evs[0];return '<div class="alert-item"><span class="alert-ic '+e.cls+'">'+e.ic+'</span><div class="alert-body"><div class="alert-title">'+esc(e.ti)+'</div><div class="alert-sub">'+esc(e.su)+'</div></div><span class="alert-time">'+timeStr(f.ts)+'</span></div>';}).join('');}
 
 /* ====================== WORKER LIVE ====================== */
-var lwStress=[];
+var liveN=40, lwStress=[], lwBase=[], lwId=[], lwZi=[], liveBuilt=false;
+function buildLive(){
+  // realistic mix: mostly safe, some watch, a few danger
+  var pat=[22,30,18,52,26,38,16,68,24,34,20,44,28,16,58,22,30,18,48,26];
+  lwBase=[];lwStress=[];lwId=[];lwZi=[];
+  for(var i=0;i<liveN;i++){
+    var b=pat[i%pat.length];
+    lwBase.push(b); lwStress.push(Math.max(8,b+(Math.random()*6-3)));
+    lwId.push("W-"+("00"+(i+1)).slice(-3));
+    lwZi.push(i%8);
+  }
+  liveBuilt=true;
+}
 function initLive(){
-  var wk=dict().cLiveWorkers;
-  if(lwStress.length!==wk.length){lwStress=wk.map(function(_,i){return 18+(i*11)%40;});}
-  el("liveCount").textContent=wk.length+" "+t("app.workers");
+  if(!liveBuilt)buildLive();
+  el("liveCount").textContent=liveN+" "+t("app.workers");
   renderLive();
-  addI(function(){for(var i=0;i<lwStress.length;i++){lwStress[i]+=(((i===2?52:24)-lwStress[i])*0.18)+(Math.random()-0.5)*9;if(Math.random()<0.04)lwStress[i]+=24;lwStress[i]=Math.max(8,Math.min(94,lwStress[i]));}renderLive();},3000);
+  addI(function(){for(var i=0;i<liveN;i++){lwStress[i]+=((lwBase[i]-lwStress[i])*0.18)+(Math.random()-0.5)*9;if(Math.random()<0.03)lwStress[i]+=22;lwStress[i]=Math.max(8,Math.min(94,lwStress[i]));}renderLive();},3000);
 }
 function renderLive(){
-  var wk=dict().cLiveWorkers;
-  el("liveWorkers").innerHTML=wk.map(function(w,i){
+  var zones=dict().cLiveWorkers, h='';
+  for(var i=0;i<liveN;i++){
     var sv=lwStress[i]||20, stage=sv>=70?"danger":sv>=45?"watch":"safe";
     var cls=stage==="danger"?"zb-danger":stage==="watch"?"zb-watch":"zb-safe";
     var lbl=stage==="danger"?t("dash.danger"):stage==="watch"?t("dash.watch"):t("dash.safe");
     var bar=stage==="danger"?"#e0483d":stage==="watch"?"#f0a818":"#1faa6b";
     var hrv=Math.round(82-sv*0.55),sleep=(7.2-sv/45).toFixed(1),eda=Math.round(20+sv*0.9);
-    return '<div class="lw"><div class="lw-top"><span class="lw-id">'+esc(w.id)+'</span><span class="zone-badge '+cls+'">'+lbl+'</span><span class="lw-z">'+esc(w.z)+'</span></div>'
+    var z=(zones[lwZi[i]]||zones[0]).z;
+    h+='<div class="lw"><div class="lw-top"><span class="lw-id">'+lwId[i]+'</span><span class="zone-badge '+cls+'">'+lbl+'</span><span class="lw-z">'+esc(z)+'</span></div>'
       +'<div class="lw-metrics"><span>HRV <b>'+hrv+'</b></span><span>'+t("app.vSleep")+' <b>'+sleep+'h</b></span><span>EDA <b>'+eda+'</b></span></div>'
-      +'<div class="lw-bar"><i style="width:'+Math.round(sv)+'%;background:'+bar+'"></i></div></div>';}).join('');
+      +'<div class="lw-bar"><i style="width:'+Math.round(sv)+'%;background:'+bar+'"></i></div></div>';
+  }
+  el("liveWorkers").innerHTML=h;
 }
 
 /* ====================== 3D DIGITAL TWIN (iso SVG) ====================== */
