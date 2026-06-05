@@ -667,18 +667,21 @@ for(var l in C){ if(window.I18N[l]){ for(var k in C[l]) window.I18N[l][k]=C[l][k
 (function(){
 var C={
 en:{
+  "hero.ctaPdf":"Download explainer (PDF)",
   "c.motion.subFall":"Fall","c.motion.subPinch":"Caught-in","c.motion.pinch":"Simulate caught-in",
   "c.motion.sPinch":"CAUGHT-IN RISK · machine e-stop","c.motion.pinchChainTitle":"Caught-in response chain · processing logic",
   cPinchChain:[{t:"Caught-in detected",s:"0.8s"},{t:"Machine e-stop",s:"1s"},{t:"On-site alarm",s:"2s"},{t:"Safety manager",s:"3s"},{t:"Triage",s:"6s"}],
   cPinchDesc:["Vision confirms hand inside the danger zone","Press actuator halted immediately","Zone beacon & speaker activated","Push to manager's phone + location","Auto-119 link if an injury is detected"]
 },
 zh:{
+  "hero.ctaPdf":"下载说明资料 (PDF)",
   "c.motion.subFall":"跌倒","c.motion.subPinch":"夹卷事故","c.motion.pinch":"模拟夹卷",
   "c.motion.sPinch":"检测到夹卷 · 设备急停","c.motion.pinchChainTitle":"夹卷响应链 · 处理逻辑",
   cPinchChain:[{t:"检测到夹卷",s:"0.8秒"},{t:"设备急停",s:"1秒"},{t:"现场报警",s:"2秒"},{t:"安全管理员",s:"3秒"},{t:"伤情评估",s:"6秒"}],
   cPinchDesc:["视觉确认手进入危险区","冲压执行器立即停止","区域警示灯与扬声器启动","推送至管理者手机 + 位置","若检出受伤则自动联动 119"]
 },
 ko:{
+  "hero.ctaPdf":"설명자료 PDF 다운로드",
   "c.motion.subFall":"낙상","c.motion.subPinch":"끼임사고","c.motion.pinch":"끼임 시뮬레이션",
   "c.motion.sPinch":"끼임 위험 감지 · 설비 비상정지","c.motion.pinchChainTitle":"끼임 대응 체인 · 처리 로직",
   cPinchChain:[{t:"끼임 감지",s:"0.8초"},{t:"설비 비상정지",s:"1초"},{t:"현장 경보",s:"2초"},{t:"안전관리자",s:"3초"},{t:"응급 평가",s:"6초"}],

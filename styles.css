@@ -64,6 +64,7 @@ section[id],#top{scroll-margin-top:84px}
 .btn-ghost:hover{border-color:var(--navy);background:#fff}
 .btn-light{background:var(--yellow);color:var(--ink)}
 .btn-light:hover{background:#ffd45e}
+.btn-dl::before{content:"⬇";font-weight:800;margin-right:2px}
 
 /* ---------- header ---------- */
 .site-header{position:sticky;top:0;z-index:100;background:rgba(246,248,252,.82);
